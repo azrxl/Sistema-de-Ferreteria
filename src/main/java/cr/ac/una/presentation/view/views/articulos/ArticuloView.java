@@ -1,5 +1,6 @@
 package cr.ac.una.presentation.view.views.articulos;
 
+import cr.ac.una.presentation.controller.Controller;
 import cr.ac.una.presentation.view.components.AbstractEntityView;
 import cr.ac.una.presentation.view.components.AbstractTableModel;
 import cr.ac.una.presentation.view.views.presentaciones.PresentacionView;
@@ -21,7 +22,7 @@ public class ArticuloView extends AbstractEntityView<Articulo> {
     private final PresentacionView presentacionView;
 
     public ArticuloView() {
-        super(new ArticuloTableModel(new ArrayList<>()));
+        super(new ArticuloTableModel(new ArrayList<>(),null));
 
         // Inicializar PresentacionView
         presentacionView = new PresentacionView();
@@ -74,6 +75,14 @@ public class ArticuloView extends AbstractEntityView<Articulo> {
         mainPanel.add(topPanel, BorderLayout.NORTH); // Parte superior con subcategoría y categoría
         mainPanel.add(splitPane, BorderLayout.CENTER); // Parte central con Artículos y Presentaciones
     }
+
+    @Override
+    public void setController(Controller controller) {
+        super.setController(controller);
+        ((ArticuloView.ArticuloTableModel) table.getModel()).controller = controller; // Conecta el controlador al modelo
+
+    }
+
     public void setSubcategoriaSeleccionada(Subcategoria subcategoria) {
         this.subcategoriaSeleccionada = subcategoria;
 
@@ -147,38 +156,53 @@ public class ArticuloView extends AbstractEntityView<Articulo> {
         return presentacionView;
     }
 
-}
+    static class ArticuloTableModel extends AbstractTableModel<Articulo> {
+        private Controller controller;
 
-class ArticuloTableModel extends AbstractTableModel<Articulo> {
-    public ArticuloTableModel(List<Articulo> articulos) {
-        super(new String[]{"ID", "Nombre", "Marca", "Descripción"}, articulos);
-    }
-
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        Articulo articulo = getItemAt(rowIndex);
-        return switch (columnIndex) {
-            case 0 -> articulo.getId(); // Columna ID
-            case 1 -> articulo.getNombre(); // Columna Nombre
-            case 2 -> articulo.getMarca(); // Columna Descripción
-            case 3 -> articulo.getDescripcion();
-            default -> null;
-        };
-    }
-
-    @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        Articulo articulo = getItemAt(rowIndex);
-        switch (columnIndex) {
-            case 1 -> articulo.setNombre((String) aValue); // Actualizar Nombre
-            case 2 -> articulo.setDescripcion((String) aValue); // Actualizar Descripción
-            case 3 -> articulo.setMarca((String) aValue);
+        public ArticuloTableModel(List<Articulo> articulos, Controller controller) {
+            super(new String[]{"ID", "Nombre", "Marca", "Descripción"}, articulos);
+            this.controller = controller;
         }
-        fireTableCellUpdated(rowIndex, columnIndex); // Notificar cambios
-    }
 
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        // Solo los campos de Capacidad, Precio Compra, Precio Venta y Cantidad son editables
-        return columnIndex == 1 || columnIndex == 2 || columnIndex == 3;
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Articulo articulo = getItemAt(rowIndex);
+            return switch (columnIndex) {
+                case 0 -> articulo.getId(); // Columna ID
+                case 1 -> articulo.getNombre(); // Columna Nombre
+                case 2 -> articulo.getMarca(); // Columna Descripción
+                case 3 -> articulo.getDescripcion();
+                default -> null;
+            };
+        }
+
+        @Override
+        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+            Articulo articulo = getItemAt(rowIndex);
+            String nuevoValor = aValue.toString();
+            String nombreOriginal = articulo.getNombre();
+
+            switch (columnIndex) {
+                case 1 -> { // Editar Nombre
+                    try {
+                        articulo.setNombre(nuevoValor); // Actualizar temporalmente
+                        controller.actualizarArticulo(articulo); // Intentar actualizar en el servicio
+                    } catch (Exception e) {
+                        articulo.setNombre(nombreOriginal); // Restaurar el nombre original
+                        fireTableDataChanged(); // Restaurar el valor en la tabla
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                case 2 -> articulo.setDescripcion((String) aValue); // Actualizar Descripción
+                case 3 -> articulo.setMarca((String) aValue);
+            }
+            fireTableCellUpdated(rowIndex, columnIndex); // Notificar cambios
+        }
+
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            // Solo los campos de Capacidad, Precio Compra, Precio Venta y Cantidad son editables
+            return columnIndex == 1 || columnIndex == 2 || columnIndex == 3;
+        }
     }
 }
+

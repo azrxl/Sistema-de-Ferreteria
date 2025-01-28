@@ -1,14 +1,21 @@
 package cr.ac.una.presentation.view.components;
 
+import cr.ac.una.presentation.controller.Controller;
+
 import java.util.List;
 
 public abstract class AbstractTableModel<T> extends javax.swing.table.AbstractTableModel {
     protected String[] columnNames;
     protected List<T> items;
+    protected Controller controller;
 
     public AbstractTableModel(String[] columnNames, List<T> items) {
         this.columnNames = columnNames;
         this.items = items;
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
     @Override

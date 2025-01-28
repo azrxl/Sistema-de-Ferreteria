@@ -1,15 +1,23 @@
 package cr.ac.una.presentation.view.views.categorias;
 
+import cr.ac.una.presentation.controller.Controller;
 import cr.ac.una.presentation.view.components.AbstractEntityView;
 import cr.ac.una.presentation.view.components.AbstractTableModel;
 import cr.ac.una.logic.objects.Categoria;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriaView extends AbstractEntityView<Categoria> {
     public CategoriaView() {
-        super(new CategoriaTableModel(new ArrayList<>()));
+        super(new CategoriaTableModel(new ArrayList<>(), null)); // Inicialmente pasa null para el controlador
+    }
+
+    @Override
+    public void setController(Controller controller) {
+        super.setController(controller);
+        ((CategoriaTableModel) table.getModel()).controller = controller; // Conecta el controlador al modelo
     }
 
     @Override
@@ -56,31 +64,51 @@ public class CategoriaView extends AbstractEntityView<Categoria> {
     protected void onElementoSeleccionado(Categoria entidad) {
         controller.initSubcategoriaView(entidad);
     }
-}
 
-class CategoriaTableModel extends AbstractTableModel<Categoria> {
-    public CategoriaTableModel(List<Categoria> categorias) {
-        super(new String[]{"ID", "Nombre", "Descripción"}, categorias);
-    }
+    static class CategoriaTableModel extends AbstractTableModel<Categoria> {
+        private Controller controller; // Referencia al controlador
 
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        Categoria categoria = getItemAt(rowIndex);
-        return switch (columnIndex) {
-            case 0 -> categoria.getId(); // Columna ID
-            case 1 -> categoria.getNombre(); // Columna Nombre
-            case 2 -> categoria.getDescripcion(); // Columna Descripción
-            default -> null;
-        };
-    }
-
-    @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        Categoria categoria = getItemAt(rowIndex);
-        switch (columnIndex) {
-            case 1 -> categoria.setNombre((String) aValue); // Actualizar Nombre
-            case 2 -> categoria.setDescripcion((String) aValue); // Actualizar Descripción
+        public CategoriaTableModel(List<Categoria> categorias, Controller controller) {
+            super(new String[]{"ID", "Nombre", "Descripción"}, categorias);
+            this.controller = controller; // Inicializar el controlador
         }
-        fireTableCellUpdated(rowIndex, columnIndex); // Notificar cambios
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Categoria categoria = getItemAt(rowIndex);
+            return switch (columnIndex) {
+                case 0 -> categoria.getId(); // Columna ID
+                case 1 -> categoria.getNombre(); // Columna Nombre
+                case 2 -> categoria.getDescripcion(); // Columna Descripción
+                default -> null;
+            };
+        }
+
+        @Override
+        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+            Categoria categoria = getItemAt(rowIndex);
+            String nombrePredeterminado = categoria.getNombre();
+            String nuevoValor = aValue.toString();
+
+            switch (columnIndex) {
+                case 1: // Editar Nombre
+                    try {
+                        categoria.setNombre(nuevoValor); // Actualizar temporalmente
+                        this.controller.actualizarCategoria(categoria); // Intentar actualizar en el servicio
+                    } catch (Exception e) {
+                        categoria.setNombre(nombrePredeterminado);
+                        fireTableDataChanged(); // Restaurar el valor original en la tabla
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
+
+                case 2: categoria.setDescripcion(nuevoValor);
+            }
+
+            fireTableCellUpdated(rowIndex, columnIndex); // Reflejar cambios en la tabla
+        }
     }
+
+
 }
+

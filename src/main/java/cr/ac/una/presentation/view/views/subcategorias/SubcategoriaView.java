@@ -1,9 +1,11 @@
 package cr.ac.una.presentation.view.views.subcategorias;
 
+import cr.ac.una.presentation.controller.Controller;
 import cr.ac.una.presentation.view.components.AbstractEntityView;
 import cr.ac.una.presentation.view.components.AbstractTableModel;
 import cr.ac.una.logic.objects.Categoria;
 import cr.ac.una.logic.objects.Subcategoria;
+import cr.ac.una.presentation.view.views.categorias.CategoriaView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +17,7 @@ public class SubcategoriaView extends AbstractEntityView<Subcategoria> {
     private final JTextField categoriaTextField;
 
     public SubcategoriaView() {
-        super(new SubcategoriaTableModel(new ArrayList<>()));
+        super(new SubcategoriaTableModel(new ArrayList<>(),null));
 
         JPanel categoriaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); // Layout horizontal
         JLabel categoriaLabel = new JLabel("Categoria     ");
@@ -31,6 +33,13 @@ public class SubcategoriaView extends AbstractEntityView<Subcategoria> {
         mainPanel.add(categoriaPanel, BorderLayout.NORTH); // Ubicar el panel de categoría en la parte superior
         mainPanel.add(secondPanel, BorderLayout.CENTER);
     }
+
+    @Override
+    public void setController(Controller controller) {
+        super.setController(controller);
+        ((SubcategoriaView.SubcategoriaTableModel) table.getModel()).controller = controller; // Conecta el controlador al modelo
+    }
+
 
     public void setCategoriaSeleccionada(Categoria categoria) {
         this.categoriaSeleccionada = categoria;
@@ -95,31 +104,51 @@ public class SubcategoriaView extends AbstractEntityView<Subcategoria> {
         nombreField.setText("");
         descripcionField.setText("");
     }
-}
 
-class SubcategoriaTableModel extends AbstractTableModel<Subcategoria> {
-    public SubcategoriaTableModel(List<Subcategoria> subcategorias) {
-        super(new String[]{"ID", "Nombre", "Descripción"}, subcategorias);
-    }
+    static class SubcategoriaTableModel extends AbstractTableModel<Subcategoria> {
+        private Controller controller; // Referencia al controlador
 
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        Subcategoria subcategoria = getItemAt(rowIndex);
-        return switch (columnIndex) {
-            case 0 -> subcategoria.getId(); // Columna ID
-            case 1 -> subcategoria.getNombre(); // Columna Nombre
-            case 2 -> subcategoria.getDescripcion(); // Columna Descripción
-            default -> null;
-        };
-    }
-
-    @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        Subcategoria subcategoria = getItemAt(rowIndex);
-        switch (columnIndex) {
-            case 1 -> subcategoria.setNombre((String) aValue); // Actualizar Nombre
-            case 2 -> subcategoria.setDescripcion((String) aValue); // Actualizar Descripción
+        public SubcategoriaTableModel(List<Subcategoria> subcategorias, Controller controller) {
+            super(new String[]{"ID", "Nombre", "Descripción"}, subcategorias);
+            this.controller = controller; // Inicializar el controlador
         }
-        fireTableCellUpdated(rowIndex, columnIndex); // Notificar cambios
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Subcategoria subcategoria = getItemAt(rowIndex);
+            return switch (columnIndex) {
+                case 0 -> subcategoria.getId(); // Columna ID
+                case 1 -> subcategoria.getNombre(); // Columna Nombre
+                case 2 -> subcategoria.getDescripcion(); // Columna Descripción
+                default -> null;
+            };
+        }
+
+        @Override
+        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+            Subcategoria subcategoria = getItemAt(rowIndex);
+            String nuevoValor = aValue.toString();
+            String nombreOriginal = subcategoria.getNombre();
+
+            switch (columnIndex) {
+                case 1: // Editar Nombre
+                    try {
+                        subcategoria.setNombre(nuevoValor); // Actualizar temporalmente
+                        controller.actualizarSubcategoria(subcategoria); // Intentar actualizar en el servicio
+                    } catch (Exception e) {
+                        subcategoria.setNombre(nombreOriginal); // Restaurar el nombre original
+                        fireTableDataChanged(); // Restaurar el valor en la tabla
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
+                case 2: // Editar Descripción
+                    subcategoria.setDescripcion(nuevoValor);
+                    break;
+            }
+            fireTableCellUpdated(rowIndex, columnIndex); // Reflejar cambios en la tabla
+        }
     }
+
+
 }
+

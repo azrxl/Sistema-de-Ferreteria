@@ -92,6 +92,10 @@ public class Controller {
         Service.instance().createCategoria(categoria);
     }
 
+    public void actualizarCategoria(Categoria categoria) throws Exception {
+        Service.instance().updateCategoria(categoria);
+    }
+
     public void eliminarCategoria(Categoria categoria) throws Exception {
         Service.instance().deleteCategoria(categoria.getId());
     }
@@ -112,6 +116,10 @@ public class Controller {
 
     public void agregarSubcategoria(Subcategoria subcategoria) throws Exception {
         Service.instance().createSubcategoria(subcategoria, subcategoria.getCategoriaID());
+    }
+
+    public void actualizarSubcategoria(Subcategoria subcategoria) throws Exception {
+        Service.instance().updateSubcategoria(subcategoria);
     }
 
     public void eliminarSubcategoria(Subcategoria subcategoria) throws Exception {
@@ -147,6 +155,10 @@ public class Controller {
         Service.instance().createArticulo(articulo, articulo.getSubcategoriaID());
     }
 
+    public void actualizarArticulo(Articulo articulo) throws Exception {
+        Service.instance().updateArticulo(articulo);
+    }
+
     public void eliminarArticulo(Articulo articulo) throws Exception {
         Service.instance().deleteArticulo(articulo.getId());
     }
@@ -179,6 +191,10 @@ public class Controller {
         Service.instance().createPresentacion(presentacion, presentacion.getArticuloID());
     }
 
+    public void actualizarPresentacion(Presentacion presentacion) throws Exception {
+        Service.instance().updatePresentacion(presentacion);
+    }
+
     public void eliminarPresentacion(Presentacion presentacion) throws Exception {
         Service.instance().deletePresentacion(presentacion);
     }
@@ -186,5 +202,6 @@ public class Controller {
     public void initPresentacionView(Articulo entidad) {
         presentacionView.setSubcategoriaSeleccionada(entidad);
     }
+
 
 }

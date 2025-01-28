@@ -187,18 +187,48 @@ public class Service {
     //--------------------------------------------------------------------------
 
     public void updateCategoria(Categoria categoria) throws Exception {
+        // Verificar si el nuevo nombre ya existe en otra categoría
+        boolean nombreExiste = data.getCategorias().stream()
+                .anyMatch(c -> c.getNombre().equalsIgnoreCase(categoria.getNombre()) && !c.getId().equals(categoria.getId()));
+
+        if (nombreExiste) {
+            throw new Exception("Ya existe una categoría con el nombre '" + categoria.getNombre() + "'.");
+        }
+
+        // Proceder con la actualización
         update(data.getCategorias(), categoria, c -> c.getId().equals(categoria.getId()), "Categoría");
     }
 
     public void updateSubcategoria(Subcategoria subcategoria) throws Exception {
+        boolean nombreExiste = data.getSubcategorias().stream()
+                .anyMatch(s -> s.getNombre().equalsIgnoreCase(subcategoria.getNombre()) && !s.getId().equals(subcategoria.getId()));
+
+        if (nombreExiste) {
+            throw new Exception("Ya existe una subcategoria con el nombre '" + subcategoria.getNombre() + "'.");
+        }
         update(data.getSubcategorias(), subcategoria, s -> s.getId().equals(subcategoria.getId()), "Subcategoría");
     }
 
     public void updateArticulo(Articulo articulo) throws Exception {
+        boolean nombreExiste = data.getArticulos().stream()
+                .anyMatch(a -> a.getNombre().equalsIgnoreCase(articulo.getNombre()) && !a.getId().equals(articulo.getId()) && a.getSubcategoriaID().equals(articulo.getSubcategoriaID()));
+
+        if (nombreExiste) {
+            throw new Exception("Ya existe un articulo con el nombre '" + articulo.getNombre() + "'.");
+        }
         update(data.getArticulos(), articulo, a -> a.getId().equals(articulo.getId()), "Artículo");
     }
 
+    //TODO: Modificar validacion para repetidos
     public void updatePresentacion(Presentacion presentacion) throws Exception {
+        boolean existe = data.getPresentaciones().stream()
+                .anyMatch(p -> p != presentacion && // Excluye la presentación actual por referencia
+                        p.getArticuloID().equals(presentacion.getArticuloID()) &&
+                        p.getUnidad().equals(presentacion.getUnidad()) &&
+                        p.getCapacidad().equals(presentacion.getCapacidad()));
+        if (existe) {
+            throw new Exception("Ya existe una presentación con la misma capacidad y unidad para este artículo.");
+        }
         update(data.getPresentaciones(), presentacion, p -> p.equals(presentacion), "Presentación");
     }
 

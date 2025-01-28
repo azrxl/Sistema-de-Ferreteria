@@ -2,10 +2,10 @@
 <data>
    <categorias>
       <categoria ID="ALR">
-         <nombre>Categoria Actualizada</nombre>
-         <descripcion>Herramienta o sustancia que modifica acabados a través del desgaste.</descripcion>
+         <nombre>Categori</nombre>
+         <descripcion>Herramienta o sustancia que modifica acabados a través del desgaste</descripcion>
          <subcategoria ID="ADH">
-            <nombre>Subcategoria Actualizada</nombre>
+            <nombre>Subcategoria</nombre>
             <descripcion>Adhesivos especializados.</descripcion>
             <articulo ID="10001">
                <nombre>Articulo Actualizado</nombre>
@@ -13,17 +13,17 @@
                <marca>Loctite</marca>
                <presentacion>
                   <unidad>mililitro</unidad>
-                  <capacidad>35</capacidad>
-                  <precioCompra>2000.0</precioCompra>
-                  <precioVenta>1500.0</precioVenta>
-                  <cantidad>10</cantidad>
-               </presentacion>
-               <presentacion>
-                  <unidad>pie</unidad>
                   <capacidad>76</capacidad>
                   <precioCompra>0.0</precioCompra>
                   <precioVenta>0.0</precioVenta>
-                  <cantidad>0</cantidad>
+                  <cantidad>3</cantidad>
+               </presentacion>
+               <presentacion>
+                  <unidad>pie</unidad>
+                  <capacidad>75</capacidad>
+                  <precioCompra>0.0</precioCompra>
+                  <precioVenta>0.0</precioVenta>
+                  <cantidad>3</cantidad>
                </presentacion>
             </articulo>
             <articulo ID="10002">
@@ -32,7 +32,7 @@
                <marca>Loctite</marca>
                <presentacion>
                   <unidad>mililitro</unidad>
-                  <capacidad>75</capacidad>
+                  <capacidad>175</capacidad>
                   <precioCompra>2000.0</precioCompra>
                   <precioVenta>1500.0</precioVenta>
                   <cantidad>0</cantidad>
@@ -71,7 +71,7 @@
          </subcategoria>
       </categoria>
       <categoria ID="HEL">
-         <nombre>Herramienta eléctrica</nombre>
+         <nombre>Categoria</nombre>
          <descripcion>Aparatos accionados por energía eléctrica para trabajos prolongados.</descripcion>
          <subcategoria ID="ALA">
             <nombre>Alámbrica</nombre>
@@ -112,7 +112,7 @@
                </presentacion>
                <presentacion>
                   <unidad>pulgada</unidad>
-                  <capacidad>2</capacidad>
+                  <capacidad>3</capacidad>
                   <precioCompra>2000.0</precioCompra>
                   <precioVenta>1500.0</precioVenta>
                   <cantidad>0</cantidad>
@@ -135,6 +135,13 @@
                   <capacidad>4</capacidad>
                   <precioCompra>2000.0</precioCompra>
                   <precioVenta>1500.0</precioVenta>
+                  <cantidad>0</cantidad>
+               </presentacion>
+               <presentacion>
+                  <unidad>pulgada</unidad>
+                  <capacidad>5</capacidad>
+                  <precioCompra>0.0</precioCompra>
+                  <precioVenta>0.0</precioVenta>
                   <cantidad>0</cantidad>
                </presentacion>
             </articulo>
