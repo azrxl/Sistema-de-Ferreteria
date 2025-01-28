@@ -1,6 +1,9 @@
 package cr.ac.una.data;
 
-import cr.ac.una.proxy.*;
+import cr.ac.una.logic.objects.Articulo;
+import cr.ac.una.logic.objects.Categoria;
+import cr.ac.una.logic.objects.Presentacion;
+import cr.ac.una.logic.objects.Subcategoria;
 
 import java.util.ArrayList;
 import java.util.List;

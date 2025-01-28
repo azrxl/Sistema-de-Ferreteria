@@ -1,10 +1,8 @@
-package cr.ac.una.presentation.views.components.abstract_view;
+package cr.ac.una.presentation.view.views;
 
 import cr.ac.una.presentation.controller.Controller;
-import cr.ac.una.presentation.views.components.tables.AbstractTableModel;
 
 import javax.swing.*;
-import java.util.List;
 
 public abstract class BaseView {
     protected JLabel IDLabel;

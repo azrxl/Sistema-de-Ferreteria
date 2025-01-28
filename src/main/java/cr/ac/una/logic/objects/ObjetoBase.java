@@ -1,4 +1,4 @@
-package cr.ac.una.proxy;
+package cr.ac.una.logic.objects;
 
 public abstract class ObjetoBase {
     protected String nombre;

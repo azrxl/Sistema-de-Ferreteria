@@ -1,4 +1,4 @@
-package cr.ac.una.proxy;
+package cr.ac.una.logic.objects;
 
 public class Subcategoria extends ObjetoBase {
     private String categoriaID;

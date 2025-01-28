@@ -1,9 +1,9 @@
 package cr.ac.una.data;
 
-import cr.ac.una.proxy.Articulo;
-import cr.ac.una.proxy.Categoria;
-import cr.ac.una.proxy.Presentacion;
-import cr.ac.una.proxy.Subcategoria;
+import cr.ac.una.logic.objects.Articulo;
+import cr.ac.una.logic.objects.Categoria;
+import cr.ac.una.logic.objects.Presentacion;
+import cr.ac.una.logic.objects.Subcategoria;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

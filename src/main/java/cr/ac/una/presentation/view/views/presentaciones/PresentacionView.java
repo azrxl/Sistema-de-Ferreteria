@@ -1,9 +1,9 @@
-package cr.ac.una.presentation.views.concrete_views;
+package cr.ac.una.presentation.view.views.presentaciones;
 
 import cr.ac.una.presentation.controller.Controller;
-import cr.ac.una.presentation.views.components.tables.PresentacionTableModel;
-import cr.ac.una.proxy.Articulo;
-import cr.ac.una.proxy.Presentacion;
+import cr.ac.una.presentation.view.components.AbstractTableModel;
+import cr.ac.una.logic.objects.Articulo;
+import cr.ac.una.logic.objects.Presentacion;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -96,5 +96,46 @@ public class PresentacionView {
 
     public void onElementoSeleccionado(Presentacion presentacion) {
         //TODO: Posible futura implementacion.
+    }
+}
+
+class PresentacionTableModel extends AbstractTableModel<Presentacion> {
+    public PresentacionTableModel(List<Presentacion> items) {
+        super(new String[]{"Capacidad", "Unidad", "Compra", "Venta", "Cantidad"}, items);
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        Presentacion item = items.get(rowIndex);
+        return switch (columnIndex) {
+            case 0 -> item.getCapacidad(); // Capacidad
+            case 1 -> item.getUnidad(); // Unidad
+            case 2 -> item.getPrecioCompra() + "$"; // Precio Compra
+            case 3 -> item.getPrecioVenta() + "$"; // Precio Venta
+            case 4 -> item.getCantidad(); // Cantidad
+            default -> null;
+        };
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) throws NumberFormatException {
+        Presentacion item = items.get(rowIndex);
+        try {
+            switch (columnIndex) {
+                case 0 -> item.setCapacidad(aValue.toString()); // Editar Capacidad
+                case 2 -> item.setPrecioCompra(Double.parseDouble(aValue.toString())); // Editar Precio Compra
+                case 3 -> item.setPrecioVenta(Double.parseDouble(aValue.toString())); // Editar Precio Venta
+                case 4 -> item.setCantidad(Integer.parseInt(aValue.toString())); // Editar Cantidad
+            }
+            fireTableCellUpdated(rowIndex, columnIndex); // Notificar cambio en la tabla
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Formato inválido para el campo.");
+        }
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        // Solo los campos de Capacidad, Precio Compra, Precio Venta y Cantidad son editables
+        return columnIndex == 0 || columnIndex == 2 || columnIndex == 3 || columnIndex == 4;
     }
 }

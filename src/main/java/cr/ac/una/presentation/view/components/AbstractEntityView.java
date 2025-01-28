@@ -1,6 +1,6 @@
-package cr.ac.una.presentation.views.components.abstract_view;
+package cr.ac.una.presentation.view.components;
 
-import cr.ac.una.presentation.views.components.tables.AbstractTableModel;
+import cr.ac.una.presentation.view.views.BaseView;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;

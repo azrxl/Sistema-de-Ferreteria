@@ -1,9 +1,9 @@
 package cr.ac.una.presentation.model;
 
-import cr.ac.una.proxy.Articulo;
-import cr.ac.una.proxy.Categoria;
-import cr.ac.una.proxy.Presentacion;
-import cr.ac.una.proxy.Subcategoria;
+import cr.ac.una.logic.objects.Articulo;
+import cr.ac.una.logic.objects.Categoria;
+import cr.ac.una.logic.objects.Presentacion;
+import cr.ac.una.logic.objects.Subcategoria;
 
 import java.util.ArrayList;
 import java.util.List;

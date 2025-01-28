@@ -1,9 +1,9 @@
-package cr.ac.una.presentation.views.concrete_views;
+package cr.ac.una.presentation.view.views.subcategorias;
 
-import cr.ac.una.presentation.views.components.abstract_view.AbstractEntityView;
-import cr.ac.una.presentation.views.components.tables.SubcategoriaTableModel;
-import cr.ac.una.proxy.Categoria;
-import cr.ac.una.proxy.Subcategoria;
+import cr.ac.una.presentation.view.components.AbstractEntityView;
+import cr.ac.una.presentation.view.components.AbstractTableModel;
+import cr.ac.una.logic.objects.Categoria;
+import cr.ac.una.logic.objects.Subcategoria;
 
 import javax.swing.*;
 import java.awt.*;
@@ -94,5 +94,32 @@ public class SubcategoriaView extends AbstractEntityView<Subcategoria> {
         codigoField.setText("");
         nombreField.setText("");
         descripcionField.setText("");
+    }
+}
+
+class SubcategoriaTableModel extends AbstractTableModel<Subcategoria> {
+    public SubcategoriaTableModel(List<Subcategoria> subcategorias) {
+        super(new String[]{"ID", "Nombre", "Descripción"}, subcategorias);
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        Subcategoria subcategoria = getItemAt(rowIndex);
+        return switch (columnIndex) {
+            case 0 -> subcategoria.getId(); // Columna ID
+            case 1 -> subcategoria.getNombre(); // Columna Nombre
+            case 2 -> subcategoria.getDescripcion(); // Columna Descripción
+            default -> null;
+        };
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        Subcategoria subcategoria = getItemAt(rowIndex);
+        switch (columnIndex) {
+            case 1 -> subcategoria.setNombre((String) aValue); // Actualizar Nombre
+            case 2 -> subcategoria.setDescripcion((String) aValue); // Actualizar Descripción
+        }
+        fireTableCellUpdated(rowIndex, columnIndex); // Notificar cambios
     }
 }

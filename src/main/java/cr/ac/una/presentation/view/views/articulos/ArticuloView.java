@@ -1,10 +1,11 @@
-package cr.ac.una.presentation.views.concrete_views;
+package cr.ac.una.presentation.view.views.articulos;
 
-import cr.ac.una.presentation.views.components.abstract_view.AbstractEntityView;
-import cr.ac.una.presentation.views.components.tables.ArticuloTableModel;
-import cr.ac.una.proxy.Articulo;
-import cr.ac.una.proxy.Categoria;
-import cr.ac.una.proxy.Subcategoria;
+import cr.ac.una.presentation.view.components.AbstractEntityView;
+import cr.ac.una.presentation.view.components.AbstractTableModel;
+import cr.ac.una.presentation.view.views.presentaciones.PresentacionView;
+import cr.ac.una.logic.objects.Articulo;
+import cr.ac.una.logic.objects.Categoria;
+import cr.ac.una.logic.objects.Subcategoria;
 
 import javax.swing.*;
 import java.awt.*;
@@ -144,5 +145,40 @@ public class ArticuloView extends AbstractEntityView<Articulo> {
 
     public PresentacionView getPresentacionView() {
         return presentacionView;
+    }
+
+}
+
+class ArticuloTableModel extends AbstractTableModel<Articulo> {
+    public ArticuloTableModel(List<Articulo> articulos) {
+        super(new String[]{"ID", "Nombre", "Marca", "Descripción"}, articulos);
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        Articulo articulo = getItemAt(rowIndex);
+        return switch (columnIndex) {
+            case 0 -> articulo.getId(); // Columna ID
+            case 1 -> articulo.getNombre(); // Columna Nombre
+            case 2 -> articulo.getMarca(); // Columna Descripción
+            case 3 -> articulo.getDescripcion();
+            default -> null;
+        };
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        Articulo articulo = getItemAt(rowIndex);
+        switch (columnIndex) {
+            case 1 -> articulo.setNombre((String) aValue); // Actualizar Nombre
+            case 2 -> articulo.setDescripcion((String) aValue); // Actualizar Descripción
+            case 3 -> articulo.setMarca((String) aValue);
+        }
+        fireTableCellUpdated(rowIndex, columnIndex); // Notificar cambios
+    }
+
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        // Solo los campos de Capacidad, Precio Compra, Precio Venta y Cantidad son editables
+        return columnIndex == 1 || columnIndex == 2 || columnIndex == 3;
     }
 }

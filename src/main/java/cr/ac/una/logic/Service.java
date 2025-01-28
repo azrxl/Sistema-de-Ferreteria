@@ -2,10 +2,10 @@ package cr.ac.una.logic;
 
 import cr.ac.una.data.Data;
 import cr.ac.una.data.XMLHandler;
-import cr.ac.una.proxy.Articulo;
-import cr.ac.una.proxy.Categoria;
-import cr.ac.una.proxy.Presentacion;
-import cr.ac.una.proxy.Subcategoria;
+import cr.ac.una.logic.objects.Articulo;
+import cr.ac.una.logic.objects.Categoria;
+import cr.ac.una.logic.objects.Presentacion;
+import cr.ac.una.logic.objects.Subcategoria;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;

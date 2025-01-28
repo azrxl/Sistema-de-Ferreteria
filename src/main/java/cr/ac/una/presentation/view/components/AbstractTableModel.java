@@ -1,4 +1,4 @@
-package cr.ac.una.presentation.views.components.tables;
+package cr.ac.una.presentation.view.components;
 
 import java.util.List;
 

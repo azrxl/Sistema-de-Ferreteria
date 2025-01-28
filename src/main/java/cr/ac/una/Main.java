@@ -3,21 +3,15 @@ package cr.ac.una;
 import cr.ac.una.logic.Service;
 import cr.ac.una.presentation.controller.Controller;
 import cr.ac.una.presentation.model.Model;
-import cr.ac.una.presentation.views.components.abstract_view.BaseView;
-import cr.ac.una.presentation.views.concrete_views.ArticuloView;
-import cr.ac.una.presentation.views.concrete_views.CategoriaView;
-import cr.ac.una.presentation.views.concrete_views.PresentacionView;
-import cr.ac.una.presentation.views.concrete_views.SubcategoriaView;
-import cr.ac.una.proxy.Articulo;
-import cr.ac.una.proxy.Categoria;
-import cr.ac.una.proxy.Presentacion;
-import cr.ac.una.proxy.Subcategoria;
+import cr.ac.una.presentation.view.views.articulos.ArticuloView;
+import cr.ac.una.presentation.view.views.categorias.CategoriaView;
+import cr.ac.una.presentation.view.views.presentaciones.PresentacionView;
+import cr.ac.una.presentation.view.views.subcategorias.SubcategoriaView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -73,5 +67,6 @@ public class Main {
             // Inicializar la aplicación
             controller.initApp();
         });
+
     }
 }
