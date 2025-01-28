@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<data>
+   <categorias>
+      <categoria ID="ALR">
+         <nombre>Categoria Actualizada</nombre>
+         <descripcion>Herramienta o sustancia que modifica acabados a través del desgaste.</descripcion>
+         <subcategoria ID="ADH">
+            <nombre>Subcategoria Actualizada</nombre>
+            <descripcion>Adhesivos especializados.</descripcion>
+            <articulo ID="10001">
+               <nombre>Articulo Actualizado</nombre>
+               <descripcion>Super Adhesivo 495</descripcion>
+               <marca>Loctite</marca>
+               <presentacion>
+                  <unidad>mililitro</unidad>
+                  <capacidad>35</capacidad>
+                  <precioCompra>2000.0</precioCompra>
+                  <precioVenta>1500.0</precioVenta>
+                  <cantidad>10</cantidad>
+               </presentacion>
+               <presentacion>
+                  <unidad>pie</unidad>
+                  <capacidad>76</capacidad>
+                  <precioCompra>0.0</precioCompra>
+                  <precioVenta>0.0</precioVenta>
+                  <cantidad>0</cantidad>
+               </presentacion>
+            </articulo>
+            <articulo ID="10002">
+               <nombre>Adhesivo Prisma</nombre>
+               <descripcion>Adhesivo Prisma 401</descripcion>
+               <marca>Loctite</marca>
+               <presentacion>
+                  <unidad>mililitro</unidad>
+                  <capacidad>75</capacidad>
+                  <precioCompra>2000.0</precioCompra>
+                  <precioVenta>1500.0</precioVenta>
+                  <cantidad>0</cantidad>
+               </presentacion>
+               <presentacion>
+                  <unidad>mililitro</unidad>
+                  <capacidad>175</capacidad>
+                  <precioCompra>2000.0</precioCompra>
+                  <precioVenta>1500.0</precioVenta>
+                  <cantidad>0</cantidad>
+               </presentacion>
+            </articulo>
+         </subcategoria>
+         <subcategoria ID="ATC">
+            <nombre>Anticorrosivos</nombre>
+            <descripcion>Materiales que previenen la corrosión.</descripcion>
+            <articulo ID="10003">
+               <nombre>Anticorrosivo Maxicoat</nombre>
+               <descripcion>Anticorrosivo Maxicoat 9660</descripcion>
+               <marca>Loctite</marca>
+               <presentacion>
+                  <unidad>mililitros</unidad>
+                  <capacidad>250</capacidad>
+                  <precioCompra>2000.0</precioCompra>
+                  <precioVenta>1500.0</precioVenta>
+                  <cantidad>0</cantidad>
+               </presentacion>
+               <presentacion>
+                  <unidad>litro</unidad>
+                  <capacidad>1</capacidad>
+                  <precioCompra>2000.0</precioCompra>
+                  <precioVenta>1500.0</precioVenta>
+                  <cantidad>0</cantidad>
+               </presentacion>
+            </articulo>
+         </subcategoria>
+      </categoria>
+      <categoria ID="HEL">
+         <nombre>Herramienta eléctrica</nombre>
+         <descripcion>Aparatos accionados por energía eléctrica para trabajos prolongados.</descripcion>
+         <subcategoria ID="ALA">
+            <nombre>Alámbrica</nombre>
+            <descripcion>Herramientas que requieren conexión a la red eléctrica.</descripcion>
+            <articulo ID="20001">
+               <nombre>Esmeriladora</nombre>
+               <descripcion>Construcción robusta con engranes metálicos.</descripcion>
+               <marca>Dewalt</marca>
+               <presentacion>
+                  <unidad>pulgada</unidad>
+                  <capacidad>4</capacidad>
+                  <precioCompra>2000.0</precioCompra>
+                  <precioVenta>1500.0</precioVenta>
+                  <cantidad>0</cantidad>
+               </presentacion>
+               <presentacion>
+                  <unidad>pulgada</unidad>
+                  <capacidad>5</capacidad>
+                  <precioCompra>2000.0</precioCompra>
+                  <precioVenta>1500.0</precioVenta>
+                  <cantidad>0</cantidad>
+               </presentacion>
+            </articulo>
+         </subcategoria>
+         <subcategoria ID="INA">
+            <nombre>Inalámbrica</nombre>
+            <descripcion>Herramientas que funcionan con baterías recargables.</descripcion>
+            <articulo ID="20002">
+               <nombre>Taladro</nombre>
+               <descripcion>Sistema LED de iluminación con empuñadura ergonómica.</descripcion>
+               <marca>Makita</marca>
+               <presentacion>
+                  <unidad>pulgadas</unidad>
+                  <capacidad>3</capacidad>
+                  <precioCompra>2000.0</precioCompra>
+                  <precioVenta>1500.0</precioVenta>
+                  <cantidad>0</cantidad>
+               </presentacion>
+               <presentacion>
+                  <unidad>pulgada</unidad>
+                  <capacidad>2</capacidad>
+                  <precioCompra>2000.0</precioCompra>
+                  <precioVenta>1500.0</precioVenta>
+                  <cantidad>0</cantidad>
+               </presentacion>
+            </articulo>
+         </subcategoria>
+      </categoria>
+      <categoria ID="HNE">
+         <nombre>Herramienta neumática</nombre>
+         <descripcion>Herramientas accionadas por aire comprimido.</descripcion>
+         <subcategoria ID="ESM">
+            <nombre>Esmeriladora</nombre>
+            <descripcion>Esmeriladora angular neumática.</descripcion>
+            <articulo ID="30001">
+               <nombre>Esmeriladora Angular Neumática</nombre>
+               <descripcion>Ideal para trabajos industriales.</descripcion>
+               <marca>BOSH</marca>
+               <presentacion>
+                  <unidad>pulgada</unidad>
+                  <capacidad>4</capacidad>
+                  <precioCompra>2000.0</precioCompra>
+                  <precioVenta>1500.0</precioVenta>
+                  <cantidad>0</cantidad>
+               </presentacion>
+            </articulo>
+         </subcategoria>
+      </categoria>
+   </categorias>
+   <unidades>
+      <unidadValida>litro</unidadValida>
+      <unidadValida>mililitro</unidadValida>
+      <unidadValida>metro</unidadValida>
+      <unidadValida>centimetro</unidadValida>
+      <unidadValida>kilo</unidadValida>
+      <unidadValida>gramo</unidadValida>
+      <unidadValida>pie</unidadValida>
+      <unidadValida>pulgada</unidadValida>
+   </unidades>
+</data>
