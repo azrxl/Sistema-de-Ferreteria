@@ -13,6 +13,7 @@ public class Model {
     private List<Subcategoria> subcategorias;
     private List<Articulo> articulos;
     private List<Presentacion> presentaciones;
+    private List<String> unidades;
 
     public Model() {
         categorias = new ArrayList<>();
@@ -21,11 +22,12 @@ public class Model {
         presentaciones = new ArrayList<>();
     }
 
-    public void init(List<Categoria> categorias, List<Subcategoria> subcategorias, List<Articulo> articulos, List<Presentacion> presentaciones) {
+    public void init(List<Categoria> categorias, List<Subcategoria> subcategorias, List<Articulo> articulos, List<Presentacion> presentaciones, List<String> unidades) {
         setCategorias(categorias);
         setSubcategorias(subcategorias);
         setArticulos(articulos);
         setPresentaciones(presentaciones);
+        setUnidades(unidades);
     }
 
     public List<Categoria> getCategorias() {
@@ -52,5 +54,10 @@ public class Model {
     public void setPresentaciones(List<Presentacion> presentaciones) {
         this.presentaciones = presentaciones;
     }
-
+    public List<String> getUnidades() {
+        return unidades;
+    }
+    public void setUnidades(List<String> unidades) {
+        this.unidades = unidades;
+    }
 }

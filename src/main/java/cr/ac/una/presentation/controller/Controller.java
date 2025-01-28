@@ -70,18 +70,27 @@ public class Controller {
                 Service.instance().getCategorias(),
                 Service.instance().getSubcategorias(),
                 Service.instance().getArticulos(),
-                Service.instance().getPresentaciones()
+                Service.instance().getPresentaciones(),
+                Service.instance().getUnidades()
         );
 
         // Cargar las categorías iniciales en la vista de categorías
         categoriaView.cargarEntidades(model.getCategorias());
         disableSubcategoriasTab();
         disableArticulosTab();
+
+        //Cargar las unidades válidas en las presentaciones
+        presentacionView.cargarUnidades(model.getUnidades());
     }
 
     // Métodos para manejar categorías
     public List<Categoria> getCategorias() {
         return model.getCategorias();
+    }
+
+
+    public List<String> getUnidades() {
+        return model.getUnidades();
     }
 
     public Categoria getCategoriaById(String categoriaID) {

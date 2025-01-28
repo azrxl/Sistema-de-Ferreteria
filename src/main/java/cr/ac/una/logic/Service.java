@@ -69,6 +69,9 @@ public class Service {
     public List<Presentacion> getPresentaciones() {
         return data.getPresentaciones();
     }
+    public List<String> getUnidades() {
+        return data.getUnidades();
+    }
 
     public void cleanData() {
         data.setCategorias(new ArrayList<>());

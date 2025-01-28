@@ -4,7 +4,6 @@ import cr.ac.una.presentation.controller.Controller;
 import cr.ac.una.presentation.view.components.AbstractTableModel;
 import cr.ac.una.logic.objects.Articulo;
 import cr.ac.una.logic.objects.Presentacion;
-import cr.ac.una.presentation.view.views.subcategorias.SubcategoriaView;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ public class PresentacionView {
     private JTextField unidadField;
     private JButton agregarButton;
     private JButton eliminarButton;
+    private JComboBox<String> unidadBox;
 
     private final PresentacionTableModel tableModel;
 
@@ -43,17 +43,41 @@ public class PresentacionView {
     public void setController(Controller controller) {
         this.controller = controller;
         ((PresentacionView.PresentacionTableModel) presentacionesTable.getModel()).controller = controller; // Conecta el controlador al modelo
+    }
 
+    public void cargarUnidades(List<String> unidades) {
+        // Limpiar el JComboBox
+        unidadBox.removeAllItems();
+
+        // Agregar una opción predeterminada
+        unidadBox.addItem("Seleccione una unidad");
+
+        // Agregar las unidades válidas al JComboBox
+        for (String unidad : unidades) {
+            unidadBox.addItem(unidad);
+        }
+
+        // Seleccionar la primera opción por defecto
+        unidadBox.setSelectedIndex(0);
     }
 
     private void agregarPresentacion() {
         String capacidad = capacidadField.getText().trim();
-        String unidad = unidadField.getText().trim();
-        if(articuloSeleccionado == null) {
-            JOptionPane.showMessageDialog(presentaciones, "Seleccione una articulo", "Error", JOptionPane.ERROR_MESSAGE);
+        String unidad = (String) unidadBox.getSelectedItem(); // Obtener la unidad seleccionada
+
+        if (articuloSeleccionado == null) {
+            JOptionPane.showMessageDialog(presentaciones, "Seleccione un artículo", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        if (capacidad.isEmpty() || unidad.isEmpty()) {
-            JOptionPane.showMessageDialog(presentaciones, "Todos los campos son requeridos.", "Error", JOptionPane.ERROR_MESSAGE);
+
+        // Validar que se haya seleccionado una unidad válida
+        if (unidad == null || unidad.equals("Seleccione una unidad")) {
+            JOptionPane.showMessageDialog(presentaciones, "Seleccione una unidad válida.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (capacidad.isEmpty()) {
+            JOptionPane.showMessageDialog(presentaciones, "La capacidad es requerida.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -63,14 +87,15 @@ public class PresentacionView {
             controller.agregarPresentacion(presentacion);
             cargarPresentaciones(controller.getPresentacionesPorArticulo(articuloSeleccionado));
             capacidadField.setText("");
-            unidadField.setText("");
-            JOptionPane.showMessageDialog(presentaciones,"Presentacion agregada con exito");
+            unidadBox.setSelectedIndex(0); // Reiniciar la selección del JComboBox
+            JOptionPane.showMessageDialog(presentaciones, "Presentación agregada con éxito");
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(presentaciones, "La capacidad debe ser un entero numerico.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(presentaciones, "La capacidad debe ser un entero numérico.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(presentaciones, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     private void eliminarPresentacion() {
         int selectedRow = presentacionesTable.getSelectedRow();
