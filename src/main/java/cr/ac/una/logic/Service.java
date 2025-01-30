@@ -2,10 +2,11 @@ package cr.ac.una.logic;
 
 import cr.ac.una.data.Data;
 import cr.ac.una.data.XMLHandler;
-import cr.ac.una.logic.objects.Articulo;
-import cr.ac.una.logic.objects.Categoria;
-import cr.ac.una.logic.objects.Presentacion;
-import cr.ac.una.logic.objects.Subcategoria;
+import cr.ac.una.logic.objects.*;
+import cr.ac.una.logic.strategyDescuento.CondicionA;
+import cr.ac.una.logic.strategyDescuento.CondicionB;
+import cr.ac.una.logic.strategyDescuento.CondicionC;
+import cr.ac.una.logic.strategyDescuento.ContextDescuento;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -269,5 +270,55 @@ public class Service {
 
     public void deletePresentacion(Presentacion presentacion) throws Exception {
         delete(data.getPresentaciones(), p -> p.equals(presentacion), "Presentación");
+    }
+
+    //-----------------------------------------------------------------------
+    private int getCantidadArticulosDiferentesInPedidido(Pedido pedido){
+        if (pedido == null || pedido.getArticulos() == null) {
+
+            return 0;
+        }
+
+        List<String> articulosUnicos = new ArrayList<>();
+        for (Articulo articulo : pedido.getArticulos()) {
+            if (!articulosUnicos.contains(articulo.getId())) {
+                articulosUnicos.add(articulo.getId());
+            }
+        }
+
+        return articulosUnicos.size();
+
+    }
+
+    public double getDescuentoPedido(Pedido pedido) throws Exception{
+        double descuento = 0;
+        double precioPedido = generatePrecioPedido(pedido);
+        ContextDescuento contextDescuento = new ContextDescuento();
+
+        if (pedido.getArticulos() == null) {
+            throw new Exception("Error en aplicar descuento");
+        }else{
+            int cantidadArticulosDiferentesInPedidido = getCantidadArticulosDiferentesInPedidido(pedido);
+
+            if(cantidadArticulosDiferentesInPedidido == 1){
+                contextDescuento.setDescuentoStrategy(new CondicionA());
+            } else if (cantidadArticulosDiferentesInPedidido > 10) {
+                contextDescuento.setDescuentoStrategy(new CondicionB());
+            }else if(precioPedido > 5000){
+                contextDescuento.setDescuentoStrategy(new CondicionC());
+            }
+
+            descuento = contextDescuento.executeStrategy(precioPedido);
+        }
+
+        return descuento;
+    }
+
+    private float generatePrecioPedido(Pedido pedido) {
+        float suma = 0;
+        for (Articulo articulo : pedido.getArticulos()) {
+            //suma += articulo.getPrecio();
+        }
+        return suma;
     }
 }
