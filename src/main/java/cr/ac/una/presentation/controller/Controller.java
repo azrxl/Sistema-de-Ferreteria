@@ -1,15 +1,12 @@
 package cr.ac.una.presentation.controller;
 
 import cr.ac.una.logic.Service;
+import cr.ac.una.logic.objects.*;
 import cr.ac.una.presentation.model.Model;
 import cr.ac.una.presentation.view.views.articulos.ArticuloView;
 import cr.ac.una.presentation.view.views.categorias.CategoriaView;
 import cr.ac.una.presentation.view.views.presentaciones.PresentacionView;
 import cr.ac.una.presentation.view.views.subcategorias.SubcategoriaView;
-import cr.ac.una.logic.objects.Articulo;
-import cr.ac.una.logic.objects.Categoria;
-import cr.ac.una.logic.objects.Presentacion;
-import cr.ac.una.logic.objects.Subcategoria;
 
 import javax.swing.*;
 import java.util.List;
@@ -66,13 +63,7 @@ public class Controller {
         presentacionView.setController(this);
 
         // Inicializar datos en el modelo
-        model.init(
-                Service.instance().getCategorias(),
-                Service.instance().getSubcategorias(),
-                Service.instance().getArticulos(),
-                Service.instance().getPresentaciones(),
-                Service.instance().getUnidades()
-        );
+        model.initData();
 
         // Cargar las categorías iniciales en la vista de categorías
         categoriaView.cargarEntidades(model.getCategorias());
@@ -212,5 +203,16 @@ public class Controller {
         presentacionView.setSubcategoriaSeleccionada(entidad);
     }
 
+    public Factura calcularFactura(List<CarritoItem> items) {
+        return model.generarFactura(items);  // Se delega el cálculo al modelo
+    }
 
+    public void confirmarPedido(List<CarritoItem> items) throws Exception {
+        for (CarritoItem item : items) {
+            Presentacion p = item.getPresentacion();
+            int nuevaExistencia = p.getCantidad() - item.getCantidad();
+            p.setCantidad(nuevaExistencia);
+            actualizarPresentacion(p);
+        }
+    }
 }

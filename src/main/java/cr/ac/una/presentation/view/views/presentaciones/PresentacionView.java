@@ -1,5 +1,7 @@
 package cr.ac.una.presentation.view.views.presentaciones;
 
+import cr.ac.una.logic.objects.CarritoItem;
+import cr.ac.una.logic.objects.Factura;
 import cr.ac.una.presentation.controller.Controller;
 import cr.ac.una.presentation.view.components.AbstractTableModel;
 import cr.ac.una.logic.objects.Articulo;
@@ -11,33 +13,54 @@ import java.util.List;
 
 public class PresentacionView {
 
-    private JPanel presentaciones;
+    private JPanel presentacionesPanel;
     private JScrollPane tableScrollPanel;
     private JTable presentacionesTable;
     private JPanel agregarPanel;
     private JLabel capacidadLabel;
     private JLabel unidadLabel;
     private JTextField capacidadField;
-    private JTextField unidadField;
     private JButton agregarButton;
     private JButton eliminarButton;
     private JComboBox<String> unidadBox;
+    private JPanel pedidoPanel;
+    private JTable carritoTable;
+    private JPanel accionPanel;
+    private JButton eliminarPedidoButton;
+    private JScrollPane carritoScrollPane;
+    private JButton confirmarPedidoButton1;
+    private JPanel mainPanel;
 
-    private final PresentacionTableModel tableModel;
+    private final PresentacionTableModel presentacionTableModel;
+    private final CarritoTableModel carritoTableModel;
 
     private Controller controller;
 
     private Articulo articuloSeleccionado;
 
     public PresentacionView() {
-        tableModel = new PresentacionTableModel(new ArrayList<>(),null);
-        presentacionesTable.setModel(tableModel);
+        presentacionTableModel = new PresentacionTableModel(new ArrayList<>(),null);
+        carritoTableModel = new CarritoTableModel(new ArrayList<>());
+
+        presentacionesTable.setModel(presentacionTableModel);
+        carritoTable.setModel(carritoTableModel);
+
         agregarButton.addActionListener(e -> agregarPresentacion());
         eliminarButton.addActionListener(e -> eliminarPresentacion());
+        eliminarPedidoButton.addActionListener(e -> eliminarDelCarrito());
+        confirmarPedidoButton1.addActionListener(e -> confirmarPedido());
+        presentacionesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    agregarAlCarrito();
+                }
+            }
+        });
     }
 
     public JPanel getMainPanel() {
-        return presentaciones;
+        return mainPanel;
     }
 
     public void setController(Controller controller) {
@@ -50,7 +73,7 @@ public class PresentacionView {
         unidadBox.removeAllItems();
 
         // Agregar una opción predeterminada
-        unidadBox.addItem("Seleccione una unidad");
+        unidadBox.addItem("-Seleccione una unidad-");
 
         // Agregar las unidades válidas al JComboBox
         for (String unidad : unidades) {
@@ -66,18 +89,18 @@ public class PresentacionView {
         String unidad = (String) unidadBox.getSelectedItem(); // Obtener la unidad seleccionada
 
         if (articuloSeleccionado == null) {
-            JOptionPane.showMessageDialog(presentaciones, "Seleccione un artículo", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(presentacionesPanel, "Seleccione un artículo", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Validar que se haya seleccionado una unidad válida
         if (unidad == null || unidad.equals("Seleccione una unidad")) {
-            JOptionPane.showMessageDialog(presentaciones, "Seleccione una unidad válida.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(presentacionesPanel, "Seleccione una unidad válida.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (capacidad.isEmpty()) {
-            JOptionPane.showMessageDialog(presentaciones, "La capacidad es requerida.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(presentacionesPanel, "La capacidad es requerida.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -88,11 +111,11 @@ public class PresentacionView {
             cargarPresentaciones(controller.getPresentacionesPorArticulo(articuloSeleccionado));
             capacidadField.setText("");
             unidadBox.setSelectedIndex(0); // Reiniciar la selección del JComboBox
-            JOptionPane.showMessageDialog(presentaciones, "Presentación agregada con éxito");
+            JOptionPane.showMessageDialog(presentacionesPanel, "Presentación agregada con éxito");
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(presentaciones, "La capacidad debe ser un entero numérico.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(presentacionesPanel, "La capacidad debe ser un entero numérico.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(presentaciones, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(presentacionesPanel, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -100,21 +123,21 @@ public class PresentacionView {
     private void eliminarPresentacion() {
         int selectedRow = presentacionesTable.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(presentaciones, "Seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(presentacionesPanel, "Seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
-            Presentacion presentacionSeleccionada = tableModel.getItemAt(selectedRow);
+            Presentacion presentacionSeleccionada = presentacionTableModel.getItemAt(selectedRow);
             controller.eliminarPresentacion(presentacionSeleccionada);
             cargarPresentaciones(controller.getPresentacionesPorArticulo(articuloSeleccionado));
-            JOptionPane.showMessageDialog(presentaciones, "Eliminado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(presentacionesPanel, "Eliminado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(presentaciones, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(presentacionesPanel, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void cargarPresentaciones(List<Presentacion> presentaciones) {
-        tableModel.setItems(presentaciones);
+        presentacionTableModel.setItems(presentaciones);
     }
 
     public void setSubcategoriaSeleccionada(Articulo entidad) {
@@ -125,6 +148,114 @@ public class PresentacionView {
     public void onElementoSeleccionado(Presentacion presentacion) {
         //TODO: Posible futura implementacion.
     }
+
+    private void agregarAlCarrito() {
+        int selectedRow = presentacionesTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(presentacionesPanel, "Seleccione una presentación para agregar al pedido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Se obtiene la presentación seleccionada
+        Presentacion presentacionSeleccionada = presentacionTableModel.getItemAt(selectedRow);
+
+        // Solicitar la cantidad mediante un diálogo
+        String input = JOptionPane.showInputDialog(presentacionesPanel, "Ingrese la cantidad a pedir (máximo " + presentacionSeleccionada.getCantidad() + "):");
+        if (input == null) { // El usuario canceló el diálogo
+            return;
+        }
+
+        try {
+            int cantidadSolicitada = Integer.parseInt(input);
+            if (cantidadSolicitada <= 0) {
+                JOptionPane.showMessageDialog(presentacionesPanel, "La cantidad debe ser mayor a 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (cantidadSolicitada > presentacionSeleccionada.getCantidad()) {
+                JOptionPane.showMessageDialog(presentacionesPanel, "No hay existencias suficientes para esa cantidad.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Verificar si el ítem ya existe en el carrito
+            boolean existe = false;
+            for (CarritoItem item : carritoTableModel.getItems()) {
+                if (item.getPresentacion().equals(presentacionSeleccionada)) {
+                    int nuevaCantidad = item.getCantidad() + cantidadSolicitada;
+                    if (nuevaCantidad > presentacionSeleccionada.getCantidad()) {
+                        JOptionPane.showMessageDialog(presentacionesPanel, "La cantidad total en el carrito supera las existencias disponibles.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    item.setCantidad(nuevaCantidad);
+                    existe = true;
+                    break;
+                }
+            }
+            if (!existe) {
+                carritoTableModel.getItems().add(new CarritoItem(presentacionSeleccionada, cantidadSolicitada));
+            }
+            carritoTableModel.fireTableDataChanged();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(presentacionesPanel, "La cantidad debe ser un número entero.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void eliminarDelCarrito() {
+        int selectedRow = carritoTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(presentacionesPanel, "Seleccione un ítem del pedido para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        carritoTableModel.getItems().remove(selectedRow);
+        carritoTableModel.fireTableDataChanged();
+    }
+
+    private void confirmarPedido() {
+        if (carritoTableModel.getItems().isEmpty()) {
+            JOptionPane.showMessageDialog(presentacionesPanel, "El carrito está vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar que cada ítem respete las existencias
+        for (CarritoItem item : carritoTableModel.getItems()) {
+            if (item.getCantidad() > item.getPresentacion().getCantidad()) {
+                JOptionPane.showMessageDialog(presentacionesPanel, "La cantidad solicitada para "
+                        + item.getPresentacion().toString() + " supera las existencias disponibles.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        try {
+            Factura factura = controller.calcularFactura(carritoTableModel.getItems());
+
+            // Confirmar el pedido y actualizar existencias a través del controlador
+            controller.confirmarPedido(carritoTableModel.getItems());
+
+            // Vaciar el carrito y refrescar ambas tablas
+            carritoTableModel.getItems().clear();
+            carritoTableModel.fireTableDataChanged();
+            cargarPresentaciones(controller.getPresentacionesPorArticulo(articuloSeleccionado));
+
+            // Mostrar la factura en un diálogo
+            mostrarFactura(factura);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(presentacionesPanel, "Error al confirmar el pedido: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void mostrarFactura(Factura factura) {
+        String message = "Factura del Pedido:\n\n" +
+                "Subtotal: $" + String.format("%.2f", factura.getSubtotal()) + "\n" +
+                "Descuento por unidades (>10 unidades): $" + String.format("%.2f", factura.getDescuentoUnidades()) + "\n" +
+                "Descuento por artículos diferentes (>10 diferentes): $" + String.format("%.2f", factura.getDescuentoDiferentes()) + "\n" +
+                "Descuento por monto (> $5000): $" + String.format("%.2f", factura.getDescuentoMonto()) + "\n" +
+                "----------------------------------\n" +
+                "Total de descuento: $" + String.format("%.2f", factura.getTotalDescuento()) + "\n" +
+                "Total a pagar: $" + String.format("%.2f", factura.getTotalFinal());
+
+        JOptionPane.showMessageDialog(mainPanel, message, "Factura del Pedido", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+
 
     static class PresentacionTableModel extends AbstractTableModel<Presentacion> {
         private Controller controller;
@@ -190,6 +321,38 @@ public class PresentacionView {
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             // Solo los campos de Capacidad, Precio Compra, Precio Venta y Cantidad son editables
             return columnIndex == 0 || columnIndex == 2 || columnIndex == 3 || columnIndex == 4;
+        }
+    }
+
+    static class CarritoTableModel extends AbstractTableModel<CarritoItem> {
+
+        public CarritoTableModel(List<CarritoItem> items) {
+            super(new String[]{"Presentación", "Cantidad Solicitada", "Precio Unitario", "Total"}, items);
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            CarritoItem item = items.get(rowIndex);
+            Presentacion p = item.getPresentacion();
+            return switch (columnIndex) {
+                case 0 -> p.toString();
+                case 1 -> item.getCantidad();
+                case 2 -> p.getPrecioVenta() + "$";
+                case 3 -> p.getPrecioVenta() * item.getCantidad() + "$";
+                default -> null;
+            };
+        }
+
+        public List<CarritoItem> getItems() {
+            return items;
+        }
+
+        @Override
+        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {}
+
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
         }
     }
 }
