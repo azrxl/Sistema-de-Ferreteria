@@ -5,6 +5,7 @@ import cr.ac.una.frontend.presentation.controller.Controller;
 import cr.ac.una.frontend.presentation.model.Model;
 import cr.ac.una.frontend.presentation.view.views.articulos.ArticuloView;
 import cr.ac.una.frontend.presentation.view.views.categorias.CategoriaView;
+import cr.ac.una.frontend.presentation.view.views.info.AcercaDeView;
 import cr.ac.una.frontend.presentation.view.views.login.LoginView;
 import cr.ac.una.frontend.presentation.view.views.subcategorias.SubcategoriaView;
 
@@ -39,6 +40,7 @@ public class AppMain {
             CategoriaView categoriaView = new CategoriaView();
             SubcategoriaView subcategoriaView = new SubcategoriaView();
             ArticuloView articuloView = new ArticuloView();
+            AcercaDeView acercaDeView = new AcercaDeView();
             Model model = new Model();
 
             // Crear el Controller (usando el JTabbedPane)
@@ -48,6 +50,8 @@ public class AppMain {
             tabbedPane.addTab("Categorias", categoriaView.getMainPanel());
             tabbedPane.addTab("Subcategorias", subcategoriaView.getMainPanel());
             tabbedPane.addTab("Articulos", articuloView.getMainPanel());
+            tabbedPane.addTab("Acerca De", acercaDeView.getMainPanel());
+
 
             // Agregar la vista principal (tarjeta "main")
             container.add(tabbedPane, "main");

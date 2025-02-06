@@ -480,8 +480,16 @@
    </unidades>
    <usuarios>
       <usuario>
-         <identificacion>001</identificacion>
-         <contrasena>001</contrasena>
+         <identificacion>JohnDoe</identificacion>
+         <contrasena>MyP455W04D</contrasena>
+      </usuario>
+      <usuario>
+         <identificacion>JaneDoe</identificacion>
+         <contrasena>qiAqv547Q#$</contrasena>
+      </usuario>
+      <usuario>
+         <identificacion>JuanPerez</identificacion>
+         <contrasena>AnyPassword</contrasena>
       </usuario>
    </usuarios>
 </data>
