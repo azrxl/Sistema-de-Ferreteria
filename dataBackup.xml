@@ -520,5 +520,11 @@
     <unidadValida>pie</unidadValida>
     <unidadValida>pulgada</unidadValida>
   </unidades>
+  <usuarios>
+    <usuario>
+      <identificacion>001</identificacion>
+      <contrasena>001</contrasena>
+    </usuario>
+  </usuarios>
 </data>
 

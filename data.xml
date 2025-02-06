@@ -13,10 +13,10 @@
                <marca>Loctite</marca>
                <presentacion>
                   <unidad>mililitro</unidad>
-                  <capacidad>76</capacidad>
+                  <capacidad>75</capacidad>
                   <precioCompra>120.5</precioCompra>
                   <precioVenta>150.0</precioVenta>
-                  <cantidad>10</cantidad>
+                  <cantidad>0</cantidad>
                </presentacion>
             </articulo>
             <articulo ID="10002">
@@ -35,27 +35,6 @@
                <nombre>Adhesivo Instantáneo</nombre>
                <descripcion>Adhesivo de secado rápido</descripcion>
                <marca>3M</marca>
-               <presentacion>
-                  <unidad>gramo</unidad>
-                  <capacidad>50</capacidad>
-                  <precioCompra>180.0</precioCompra>
-                  <precioVenta>220.0</precioVenta>
-                  <cantidad>3</cantidad>
-               </presentacion>
-               <presentacion>
-                  <unidad>mililitro</unidad>
-                  <capacidad>250</capacidad>
-                  <precioCompra>2000.0</precioCompra>
-                  <precioVenta>1500.0</precioVenta>
-                  <cantidad>2</cantidad>
-               </presentacion>
-               <presentacion>
-                  <unidad>litro</unidad>
-                  <capacidad>1</capacidad>
-                  <precioCompra>2000.0</precioCompra>
-                  <precioVenta>1500.0</precioVenta>
-                  <cantidad>0</cantidad>
-               </presentacion>
             </articulo>
             <articulo ID="10004">
                <nombre>Pegamento Industrial</nombre>
@@ -149,27 +128,6 @@
                <nombre>Anticorrosivo Maxicoat</nombre>
                <descripcion>Anticorrosivo Maxicoat 9660</descripcion>
                <marca>Loctite</marca>
-               <presentacion>
-                  <unidad>gramo</unidad>
-                  <capacidad>50</capacidad>
-                  <precioCompra>180.0</precioCompra>
-                  <precioVenta>220.0</precioVenta>
-                  <cantidad>3</cantidad>
-               </presentacion>
-               <presentacion>
-                  <unidad>mililitros</unidad>
-                  <capacidad>250</capacidad>
-                  <precioCompra>2000.0</precioCompra>
-                  <precioVenta>1500.0</precioVenta>
-                  <cantidad>2</cantidad>
-               </presentacion>
-               <presentacion>
-                  <unidad>litro</unidad>
-                  <capacidad>1</capacidad>
-                  <precioCompra>2000.0</precioCompra>
-                  <precioVenta>1500.0</precioVenta>
-                  <cantidad>0</cantidad>
-               </presentacion>
             </articulo>
          </subcategoria>
       </categoria>
@@ -188,7 +146,7 @@
                   <capacidad>4</capacidad>
                   <precioCompra>2500.0</precioCompra>
                   <precioVenta>3000.0</precioVenta>
-                  <cantidad>5</cantidad>
+                  <cantidad>0</cantidad>
                </presentacion>
             </articulo>
             <articulo ID="20002">
@@ -260,7 +218,7 @@
                   <capacidad>750</capacidad>
                   <precioCompra>2500.0</precioCompra>
                   <precioVenta>3200.0</precioVenta>
-                  <cantidad>3</cantidad>
+                  <cantidad>0</cantidad>
                </presentacion>
             </articulo>
             <articulo ID="20008">
@@ -332,11 +290,18 @@
                <descripcion>Ideal para cortes en madera y metal.</descripcion>
                <marca>DeWalt</marca>
                <presentacion>
-                  <unidad>pulgada</unidad>
-                  <capacidad>20</capacidad>
-                  <precioCompra>4100.0</precioCompra>
-                  <precioVenta>4800.0</precioVenta>
-                  <cantidad>5</cantidad>
+                  <unidad>kilo</unidad>
+                  <capacidad>1</capacidad>
+                  <precioCompra>0.0</precioCompra>
+                  <precioVenta>0.0</precioVenta>
+                  <cantidad>0</cantidad>
+               </presentacion>
+               <presentacion>
+                  <unidad>metro</unidad>
+                  <capacidad>4</capacidad>
+                  <precioCompra>0.0</precioCompra>
+                  <precioVenta>0.0</precioVenta>
+                  <cantidad>0</cantidad>
                </presentacion>
             </articulo>
          </subcategoria>
@@ -368,7 +333,7 @@
                   <capacidad>5</capacidad>
                   <precioCompra>2300.0</precioCompra>
                   <precioVenta>2800.0</precioVenta>
-                  <cantidad>4</cantidad>
+                  <cantidad>2</cantidad>
                </presentacion>
             </articulo>
             <articulo ID="30003">
@@ -380,7 +345,7 @@
                   <capacidad>3</capacidad>
                   <precioCompra>1800.0</precioCompra>
                   <precioVenta>2200.0</precioVenta>
-                  <cantidad>6</cantidad>
+                  <cantidad>0</cantidad>
                </presentacion>
             </articulo>
          </subcategoria>
@@ -396,7 +361,7 @@
                   <capacidad>1800</capacidad>
                   <precioCompra>2700.0</precioCompra>
                   <precioVenta>3200.0</precioVenta>
-                  <cantidad>4</cantidad>
+                  <cantidad>0</cantidad>
                </presentacion>
             </articulo>
             <articulo ID="30102">
@@ -408,7 +373,7 @@
                   <capacidad>1500</capacidad>
                   <precioCompra>2500.0</precioCompra>
                   <precioVenta>2900.0</precioVenta>
-                  <cantidad>25</cantidad>
+                  <cantidad>13</cantidad>
                </presentacion>
             </articulo>
             <articulo ID="30103">
@@ -420,7 +385,7 @@
                   <capacidad>2500</capacidad>
                   <precioCompra>3000.0</precioCompra>
                   <precioVenta>3500.0</precioVenta>
-                  <cantidad>6</cantidad>
+                  <cantidad>2</cantidad>
                </presentacion>
             </articulo>
             <articulo ID="30104">
@@ -432,7 +397,7 @@
                   <capacidad>2000</capacidad>
                   <precioCompra>3200.0</precioCompra>
                   <precioVenta>3800.0</precioVenta>
-                  <cantidad>4</cantidad>
+                  <cantidad>3</cantidad>
                </presentacion>
             </articulo>
             <articulo ID="30105">
@@ -480,7 +445,7 @@
                   <capacidad>1600</capacidad>
                   <precioCompra>2750.0</precioCompra>
                   <precioVenta>3250.0</precioVenta>
-                  <cantidad>5</cantidad>
+                  <cantidad>0</cantidad>
                </presentacion>
             </articulo>
             <articulo ID="30109">
@@ -492,7 +457,7 @@
                   <capacidad>2100</capacidad>
                   <precioCompra>3400.0</precioCompra>
                   <precioVenta>3900.0</precioVenta>
-                  <cantidad>2</cantidad>
+                  <cantidad>1</cantidad>
                </presentacion>
             </articulo>
             <articulo ID="30110">
@@ -504,7 +469,7 @@
                   <capacidad>1300</capacidad>
                   <precioCompra>2900.0</precioCompra>
                   <precioVenta>3400.0</precioVenta>
-                  <cantidad>2</cantidad>
+                  <cantidad>1</cantidad>
                </presentacion>
             </articulo>
          </subcategoria>
@@ -520,4 +485,10 @@
       <unidadValida>pie</unidadValida>
       <unidadValida>pulgada</unidadValida>
    </unidades>
+   <usuarios>
+      <usuario>
+         <identificacion>001</identificacion>
+         <contrasena>001</contrasena>
+      </usuario>
+   </usuarios>
 </data>
