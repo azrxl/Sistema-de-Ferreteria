@@ -30,7 +30,6 @@ public class ProxyService implements IService {
     Controller controller;
     Socket skt;
 
-    // Conexión al servidor
     private void connect() throws Exception {
         skt = new Socket(Protocol.SERVER, Protocol.PORT);
         out = new ObjectOutputStream(skt.getOutputStream());
@@ -103,11 +102,7 @@ public class ProxyService implements IService {
 
     public void start() {
         System.out.println("Client worker atendiendo peticiones...");
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-                listen();
-            }
-        });
+        Thread t = new Thread(this::listen);
         continuar = true;
         t.start();
     }

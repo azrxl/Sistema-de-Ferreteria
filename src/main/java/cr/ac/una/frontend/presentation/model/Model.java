@@ -11,12 +11,14 @@ public class Model {
     private List<Articulo> articulos;
     private List<Presentacion> presentaciones;
     private List<String> unidades;
+    private User usuario;
 
     public Model() {
         categorias = new ArrayList<>();
         subcategorias = new ArrayList<>();
         articulos = new ArrayList<>();
         presentaciones = new ArrayList<>();
+        usuario = null;
     }
 
     public void initData(List<Categoria> categorias, List<Subcategoria> subcategorias, List<Articulo> articulos, List<Presentacion> presentaciones, List<String> unidades) {
@@ -68,4 +70,11 @@ public class Model {
         this.unidades = unidades;
     }
 
+    public User getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(User usuario) {
+        this.usuario = usuario;
+    }
 }

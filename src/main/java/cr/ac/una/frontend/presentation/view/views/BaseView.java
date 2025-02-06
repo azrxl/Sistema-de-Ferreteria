@@ -38,5 +38,4 @@ public abstract class BaseView {
     public void setController(Controller controller) {
         this.controller = controller;
     }
-
 }

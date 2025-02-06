@@ -1,6 +1,7 @@
 package cr.ac.una.frontend.presentation.controller;
 
 import cr.ac.una.backend.logic.Service;
+import cr.ac.una.frontend.logic.ProxyService;
 import cr.ac.una.frontend.presentation.model.Model;
 import cr.ac.una.frontend.presentation.view.views.articulos.ArticuloView;
 import cr.ac.una.frontend.presentation.view.views.categorias.CategoriaView;
@@ -224,4 +225,18 @@ public class Controller {
     public void updateInventory(Pedido orderUpdate) {
 
     }
+
+    // Método de login: delega al Service y devuelve el usuario autenticado.
+    public User login(User user) throws Exception {
+        User usuario = ProxyService.instance().login(user);
+        model.setUsuario(usuario);
+        return usuario;
+    }
+
+    // Método de logout: delega al Service para cerrar la sesión.
+    public void logout() throws Exception {
+        ProxyService.instance().logout(model.getUsuario());
+        model.setUsuario(null);
+    }
+
 }

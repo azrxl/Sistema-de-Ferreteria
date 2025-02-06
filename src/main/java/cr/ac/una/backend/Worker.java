@@ -25,15 +25,13 @@ public class Worker {
         return user;
     }
 
-    public void start() {
-        continuar = true;
-        System.out.println("Worker atendiendo peticiones para el usuario: " + user.getIdentificacion());
-        Thread t = new Thread(new Runnable(){
-            public void run(){
-                listen();
-            }
-        });
-        t.start();
+    public void start(){
+        try {
+            System.out.println("Worker atendiendo peticiones...");
+            Thread t = new Thread(this::listen);
+            continuar = true;
+            t.start();
+        } catch (Exception ignored) {}
     }
 
     public void stop() {
